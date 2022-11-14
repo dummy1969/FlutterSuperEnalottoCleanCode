@@ -27,18 +27,33 @@ class HomePage extends StatelessWidget {
               })
         ],
       ),
-      body: Center(
-        child:
-            Column(mainAxisAlignment: MainAxisAlignment.start, children: const [
-          SizedBox(
-            height: margin,
-          ),
-          Placeholder(),
-          SizedBox(
-            height: margin,
-          ),
-          CustomButtom(),
-        ]),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 50),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: margin,
+            ),
+            Expanded(
+                child: Center(
+              child: CircularProgressIndicator(
+                  color: themeData.colorScheme.secondary),
+              /*Text(
+              'Genera nuovi numeri',
+              style: themeData.textTheme.bodyText1,
+            )
+            */
+            )),
+            const SizedBox(
+              height: margin,
+            ),
+            const CustomButtom(),
+            const SizedBox(
+              height: margin,
+            ),
+          ],
+        ),
       ),
     );
   }
