@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_superenalotto_cleancode/2_application/pages/home/widgets/custom_button.dart';
+import 'package:flutter_superenalotto_cleancode/2_application/pages/home/widgets/home_field.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/services/theme_service.dart';
+import 'package:flutter_superenalotto_cleancode/2_application/core/constant.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,7 +12,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    const margin = 10.0;
 
     return Scaffold(
       appBar: AppBar(
@@ -31,26 +32,43 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: margin,
+          children: const [
+            SizedBox(
+              height: k_heightMargin,
             ),
             Expanded(
                 child: Center(
-              child: CircularProgressIndicator(
-                  color: themeData.colorScheme.secondary),
-              /*Text(
+                    child: HomeWidget(
+              estrazioniDiecielotto: ['1-2-3-4-5-6'],
+              estrazioniEuroJackpot: ['7-8-9-10-11'],
+              estrazioniMilionDay: ['12-13-14-15-16'],
+              estrazioniSupernalotto: [
+                '19-8-5-3-45',
+                '1,2,3,4,5,6',
+                '1,2,3,4,5,6',
+                '1,2,3,4,5,6'
+              ],
+              getStar: '90',
+              get10: '5-2',
+            )
+
+                    /*
+                  CircularProgressIndicator(
+                      color: themeData.colorScheme.secondary),
+*/
+
+                    /*Text(
               'Genera nuovi numeri',
               style: themeData.textTheme.bodyText1,
             )
             */
-            )),
-            const SizedBox(
-              height: margin,
+                    )),
+            SizedBox(
+              height: k_heightMargin,
             ),
-            const CustomButtom(),
-            const SizedBox(
-              height: margin,
+            CustomButtom(),
+            SizedBox(
+              height: k_heightMargin,
             ),
           ],
         ),
