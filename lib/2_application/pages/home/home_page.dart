@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_superenalotto_cleancode/2_application/pages/home/bloc/home_bloc.dart';
 import 'package:flutter_superenalotto_cleancode/2_application/pages/home/widgets/custom_button.dart';
+import 'package:flutter_superenalotto_cleancode/2_application/pages/home/widgets/error_message.dart';
 import 'package:flutter_superenalotto_cleancode/2_application/pages/home/widgets/home_field.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/services/theme_service.dart';
 import 'package:flutter_superenalotto_cleancode/2_application/core/constant.dart';
+
+class HomePageWrapperProvider extends StatelessWidget {
+  const HomePageWrapperProvider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => HomeBloc(),
+      child: const HomePage(),
+    );
+  }
+}
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -32,42 +47,49 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
-            SizedBox(
+          children: [
+            const SizedBox(
               height: k_heightMargin,
             ),
-            Expanded(
-                child: Center(
-                    child: HomeWidget(
-              estrazioniDiecielotto: ['1-2-3-4-5-6'],
-              estrazioniEuroJackpot: ['7-8-9-10-11'],
-              estrazioniMilionDay: ['12-13-14-15-16'],
-              estrazioniSupernalotto: [
-                '19-8-5-3-45',
-                '1,2,3,4,5,6',
-                '1,2,3,4,5,6',
-                '1,2,3,4,5,6'
-              ],
-              getStar: '90',
-              get10: '5-2',
+            Expanded(child: Center(child: BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                if (state is HomeInitial) {
+                  return Text(
+                    'Genera nuovi numeri',
+                    style: themeData.textTheme.bodyText1,
+                  );
+                } else if (state is HomeLoading) {
+                  return CircularProgressIndicator(
+                      color: themeData.colorScheme.secondary);
+                } else if (state is HomeLoaded) {
+                  return HomeWidget(
+                    estrazioniDiecielotto: state.estrazioniDiecielotto,
+                    estrazioniEuroJackpot: state.estrazioniEuroJackpot,
+                    estrazioniMilionDay: state.estrazioniMilionDay,
+                    estrazioniSupernalotto: state.estrazioniSupernalotto,
+                    getStar: state.getStar,
+                    get10: state.get10,
+                  );
+                } else if (state is HomeError) {
+                  return ErrorMessage(message: state.errorMessage);
+                }
+                return const SizedBox();
+              },
             )
 
-                    /*
+                /*
                   CircularProgressIndicator(
                       color: themeData.colorScheme.secondary),
 */
 
-                    /*Text(
-              'Genera nuovi numeri',
-              style: themeData.textTheme.bodyText1,
-            )
+                /*
             */
-                    )),
-            SizedBox(
+                )),
+            const SizedBox(
               height: k_heightMargin,
             ),
-            CustomButtom(),
-            SizedBox(
+            const CustomButtom(),
+            const SizedBox(
               height: k_heightMargin,
             ),
           ],

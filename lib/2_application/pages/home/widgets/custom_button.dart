@@ -1,6 +1,7 @@
 //import 'package:advicer/2_application/pages/advice/cubit/advicer_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_superenalotto_cleancode/2_application/pages/home/bloc/home_bloc.dart';
 
 class CustomButtom extends StatelessWidget {
   const CustomButtom({super.key});
@@ -12,6 +13,7 @@ class CustomButtom extends StatelessWidget {
     return InkResponse(
       onTap: () {
         debugPrint('Botton Pressed');
+        BlocProvider.of<HomeBloc>(context).add(EstrazioniRequestedEvent());
         //BlocProvider.of<AdvicerCubit>(context).adviceRequested();
       },
       child: Material(
