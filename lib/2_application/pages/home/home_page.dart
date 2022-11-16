@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_superenalotto_cleancode/2_application/pages/home/bloc/home_bloc.dart';
+//import 'package:flutter_superenalotto_cleancode/2_application/pages/home/bloc/home_bloc.dart';
+import 'package:flutter_superenalotto_cleancode/2_application/pages/home/cubit/home_cubit.dart';
 import 'package:flutter_superenalotto_cleancode/2_application/pages/home/widgets/custom_button.dart';
 import 'package:flutter_superenalotto_cleancode/2_application/pages/home/widgets/error_message.dart';
 import 'package:flutter_superenalotto_cleancode/2_application/pages/home/widgets/home_field.dart';
@@ -15,7 +16,7 @@ class HomePageWrapperProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeBloc(),
+      create: (context) => HomeCubit(),
       child: const HomePage(),
     );
   }
@@ -51,7 +52,8 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: k_heightMargin,
             ),
-            Expanded(child: Center(child: BlocBuilder<HomeBloc, HomeState>(
+            Expanded(child: Center(
+                child: BlocBuilder<HomeCubit, HomeCubitState>(
               builder: (context, state) {
                 if (state is HomeInitial) {
                   return Text(
