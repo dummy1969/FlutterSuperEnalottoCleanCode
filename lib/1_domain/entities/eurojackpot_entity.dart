@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-class EuroJackpot extends Equatable {
+class EuroJackpotEntity extends Equatable {
   final List<String>? estrazioni;
-  const EuroJackpot({
+  const EuroJackpotEntity({
     required this.estrazioni,
   });
 
