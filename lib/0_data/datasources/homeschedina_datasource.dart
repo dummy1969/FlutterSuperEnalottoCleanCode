@@ -4,6 +4,7 @@ import 'package:flutter_superenalotto_cleancode/1_domain/entities/eurojackpot_en
 import 'package:flutter_superenalotto_cleancode/1_domain/entities/home_schedina_entity.dart';
 import 'package:flutter_superenalotto_cleancode/1_domain/entities/milionday_entity.dart';
 import 'package:flutter_superenalotto_cleancode/1_domain/entities/superenalotto_entity.dart';
+import 'package:flutter_superenalotto_cleancode/1_domain/failures/failures.dart';
 
 abstract class HomeSchedinaDatasource {
   Future<HomeSchedinaEntity> getHomeSchedina();
@@ -17,26 +18,33 @@ class HomeSchedinaLocalSourceImpl implements HomeSchedinaDatasource {
   Future<HomeSchedinaEntity> getHomeSchedina() async {
     //TODO secondo me a sto punto dovrei andare a recuperare le preferenze delle colonne
     //salvata via shared_preferences, per ora le metto fisse
-    final superEnalotto = SuperEnalotto(2);
-    final milionDay = MilionDay(1);
-    final euroJackpot = EuroJackpot(1);
-    final lotto = DieciLotto(1);
 
-    final superEnalalottoEntity = SuperEnalottoEntity(
-        estrazioni: superEnalotto.estrazioni(),
-        getStar: superEnalotto.getStar());
-    final milionDayEntity = MilionDayEntity(estrazioni: milionDay.estrazioni());
-    final euroJackpotEntity = EuroJackpotEntity(
-        estrazioni: euroJackpot.estrazioni(), get10: euroJackpot.get10());
-    final lottoEntity = DieciELottoEntity(estrazioni: lotto.estrazioni());
+    try {
+      final superEnalotto = SuperEnalotto(2);
+      final milionDay = MilionDay(1);
+      final euroJackpot = EuroJackpot(1);
+      final lotto = DieciLotto(1);
 
-    final homeSchedinaEntity = HomeSchedinaEntity(
-        superEnalotto: superEnalalottoEntity,
-        euroJackpot: euroJackpotEntity,
-        miliondDay: milionDayEntity,
-        diecieLotto: lottoEntity);
+      final superEnalalottoEntity = SuperEnalottoEntity(
+          estrazioni: superEnalotto.estrazioni(),
+          getStar: superEnalotto.getStar());
+      final milionDayEntity =
+          MilionDayEntity(estrazioni: milionDay.estrazioni());
+      final euroJackpotEntity = EuroJackpotEntity(
+          estrazioni: euroJackpot.estrazioni(), get10: euroJackpot.get10());
+      final lottoEntity = DieciELottoEntity(estrazioni: lotto.estrazioni());
 
-    return homeSchedinaEntity;
+      final homeSchedinaEntity = HomeSchedinaEntity(
+          superEnalotto: superEnalalottoEntity,
+          euroJackpot: euroJackpotEntity,
+          miliondDay: milionDayEntity,
+          diecieLotto: lottoEntity);
+
+      return homeSchedinaEntity;
+    } catch (e) {
+      // non so pensare cosa in questo caso possa andare storto ma nel caso lancio un exception
+      throw GeneralFailure();
+    }
   }
 }
 

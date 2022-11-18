@@ -1,4 +1,5 @@
 import 'package:flutter_superenalotto_cleancode/0_data/datasources/homeschedina_datasource.dart';
+import 'package:flutter_superenalotto_cleancode/0_data/exceptions/exception.dart';
 import 'package:flutter_superenalotto_cleancode/1_domain/failures/failures.dart';
 import 'package:flutter_superenalotto_cleancode/1_domain/entities/home_schedina_entity.dart';
 import 'package:dartz/dartz.dart';
@@ -17,8 +18,14 @@ class HomeSchedinaRepoImpl implements HomeSchedinaRepo {
 
   @override
   Future<Either<Failure, HomeSchedinaEntity>> getAdviceFromDatasource() async {
-    final result = await homeSchedinaDatasource.getHomeSchedina();
-    return right(result);
+    try {
+      final result = await homeSchedinaDatasource.getHomeSchedina();
+      return right(result);
+    } on ServerException catch (_) {
+      return left(ServerFailure());
+    } catch (e) {
+      return left(GeneralFailure());
+    }
   }
 }
 
