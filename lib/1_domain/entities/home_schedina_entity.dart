@@ -1,8 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter_superenalotto_cleancode/1_domain/entities/superenalotto_entity.dart';
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_typing_uninitialized_variables
 class HomeSchedinaEntity {
-  var superEnalotto? =SuperEnalottoEntity;
+  var superEnalotto;
   var euroJackpot;
   var miliondDay;
   var diecieLotto;

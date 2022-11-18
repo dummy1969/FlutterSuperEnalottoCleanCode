@@ -26,9 +26,11 @@ class HomeCubit extends Cubit<HomeCubitState> {
             emit(HomeError(errorMessage: _mapFailureToMessage(failure))),
         (estrazione) => emit(HomeLoaded(
             estrazioniSupernalotto: estrazione.superEnalotto.estrazioni,
+            getStar: estrazione.superEnalotto.getStar,
             estrazioniMilionDay: estrazione.miliondDay.estrazioni,
             estrazioniDiecielotto: estrazione.diecieLotto.estrazioni,
-            estrazioniEuroJackpot: estrazione.euroJackpot.estrazioni)));
+            estrazioniEuroJackpot: estrazione.euroJackpot.estrazioni,
+            get10: estrazione.euroJackpot.get10)));
 
     debugPrint('estrazioni generate');
   }
