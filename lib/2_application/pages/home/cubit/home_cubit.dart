@@ -12,8 +12,8 @@ const serverFailureMessage = 'Ops, API Error. please try again!';
 const cacheFailureMessage = 'Ops, chache failed. Please try again!';
 
 class HomeCubit extends Cubit<HomeCubitState> {
-  HomeCubit() : super(HomeInitial());
-  final HomeUseCase homeUseCase = HomeUseCase();
+  final HomeUseCase homeUseCase;
+  HomeCubit({required this.homeUseCase}) : super(HomeInitial());
 
   void estrazioniRequested() async {
     emit(HomeLoading());

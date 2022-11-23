@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../../core/services/theme_service.dart';
 import 'package:flutter_superenalotto_cleancode/2_application/core/constant.dart';
+import '../../../injection.dart';
 
 class HomePageWrapperProvider extends StatelessWidget {
   const HomePageWrapperProvider({super.key});
@@ -16,7 +17,7 @@ class HomePageWrapperProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit(),
+      create: (context) => sl<HomeCubit>(),
       child: const HomePage(),
     );
   }

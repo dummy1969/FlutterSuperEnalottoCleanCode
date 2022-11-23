@@ -6,15 +6,16 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_superenalotto_cleancode/1_domain/repositories/home_schedina_repo.dart';
 
 class HomeSchedinaRepoImpl implements HomeSchedinaRepo {
+  final HomeSchedinaDatasource homeSchedinaDatasource;
+
+  HomeSchedinaRepoImpl({required this.homeSchedinaDatasource});
+
   //TODO  accorgersi che siamo online e che possiamo/dobbiamo andare a prendere il risultato via api
   //una cosa del tipo
   // if (online) {
   //  final HomeSchedinaDatasource homeSchedinaDatasource =
   //    HomeSchedinaRemoteSourceImpl();
   // }
-
-  final HomeSchedinaDatasource homeSchedinaDatasource =
-      HomeSchedinaLocalSourceImpl();
 
   @override
   Future<Either<Failure, HomeSchedinaEntity>> getAdviceFromDatasource() async {

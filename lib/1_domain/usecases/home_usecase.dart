@@ -1,14 +1,15 @@
-import 'package:flutter_superenalotto_cleancode/0_data/repositories/home_schedina_repo_impl.dart';
-import 'package:flutter_superenalotto_cleancode/1_domain/entities/diecielotto_entity.dart';
-import 'package:flutter_superenalotto_cleancode/1_domain/entities/eurojackpot_entity.dart';
-import 'package:flutter_superenalotto_cleancode/1_domain/entities/home_schedina_entity.dart';
-import 'package:flutter_superenalotto_cleancode/1_domain/entities/milionday_entity.dart';
-import 'package:flutter_superenalotto_cleancode/1_domain/entities/superenalotto_entity.dart';
-import 'package:flutter_superenalotto_cleancode/1_domain/failures/failures.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
 
+import 'package:flutter_superenalotto_cleancode/1_domain/entities/home_schedina_entity.dart';
+import 'package:flutter_superenalotto_cleancode/1_domain/failures/failures.dart';
+import 'package:flutter_superenalotto_cleancode/1_domain/repositories/home_schedina_repo.dart';
+
 class HomeUseCase {
-  final homeSchedinaRepo = HomeSchedinaRepoImpl();
+  final HomeSchedinaRepo homeSchedinaRepo;
+  HomeUseCase({
+    required this.homeSchedinaRepo,
+  });
 
   Future<Either<Failure, HomeSchedinaEntity>> getEstrazioni() async {
     return homeSchedinaRepo.getAdviceFromDatasource();
