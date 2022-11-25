@@ -1,10 +1,18 @@
+import 'package:flutter_superenalotto_cleancode/0_data/models/diecielotto_model.dart';
+import 'package:flutter_superenalotto_cleancode/0_data/models/eurojackpot_model.dart';
+import 'package:flutter_superenalotto_cleancode/0_data/models/milionday_model.dart';
 import 'package:flutter_superenalotto_cleancode/0_data/models/random.dart';
+import 'package:flutter_superenalotto_cleancode/0_data/models/superenalotto_model.dart';
 import 'package:flutter_superenalotto_cleancode/1_domain/entities/diecielotto_entity.dart';
 import 'package:flutter_superenalotto_cleancode/1_domain/entities/eurojackpot_entity.dart';
 import 'package:flutter_superenalotto_cleancode/1_domain/entities/home_schedina_entity.dart';
 import 'package:flutter_superenalotto_cleancode/1_domain/entities/milionday_entity.dart';
 import 'package:flutter_superenalotto_cleancode/1_domain/entities/superenalotto_entity.dart';
 import 'package:flutter_superenalotto_cleancode/1_domain/failures/failures.dart';
+
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 abstract class HomeSchedinaDatasource {
   Future<HomeSchedinaEntity> getHomeSchedina();
@@ -49,13 +57,49 @@ class HomeSchedinaLocalSourceImpl implements HomeSchedinaDatasource {
 }
 
 class HomeSchedinaRemoteSourceImpl implements HomeSchedinaDatasource {
-  /// TODO Classe che finalmente implementa la generazione delle schedine
+  /// Classe che finalmente implementa la generazione delle schedine
   /// in questo caso via API
 
+  final http.Client client;
+
+  HomeSchedinaRemoteSourceImpl({required this.client});
+
   @override
-  Future<HomeSchedinaEntity> getHomeSchedina() {
-    // TODO: implement getHomeSchedina da interogazione API
-    throw UnimplementedError();
+  Future<HomeSchedinaEntity> getHomeSchedina() async {
+    var response = await client.get(
+        Uri.parse('http://192.168.1.3:5238/DiecieLotto?iNumColonne=2'),
+        headers: {'content-type': 'application/json'});
+    var responseBody = json.decode(response.body);
+
+    //(jsonDecode(response.body)["data"] as List).map((e) => e as Map<String, dynamic>)?.toList();
+
+    final diecieLottoModel = DiecieLottoModel.fromJson(responseBody);
+
+    response = await client.get(
+        Uri.parse('http://192.168.1.3:5238/SuperEnalotto?iNumColonne=2'),
+        headers: {'content-type': 'application/json'});
+    responseBody = json.decode(response.body);
+    final superEnalottoModel = SuperEnalottoModel.fromJson(responseBody);
+
+    response = await client.get(
+        Uri.parse('http://192.168.1.3:5238/EuroJackpot?iNumColonne=2'),
+        headers: {'content-type': 'application/json'});
+    responseBody = json.decode(response.body);
+    final euroJackpotModel = EuroJackpotModel.fromJson(responseBody);
+
+    response = await client.get(
+        Uri.parse('http://192.168.1.3:5238/MilionDay?iNumColonne=2'),
+        headers: {'content-type': 'application/json'});
+    responseBody = json.decode(response.body);
+    final milionDayModel = MilionDayModel.fromJson(responseBody);
+
+    final HomeSchedinaEntity homeSchedinaEntity = HomeSchedinaEntity(
+        superEnalotto: superEnalottoModel,
+        euroJackpot: euroJackpotModel,
+        miliondDay: milionDayModel,
+        diecieLotto: diecieLottoModel);
+
+    return homeSchedinaEntity;
   }
 }
 /*

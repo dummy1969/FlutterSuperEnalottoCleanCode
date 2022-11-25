@@ -5,6 +5,7 @@ import 'package:flutter_superenalotto_cleancode/1_domain/usecases/home_usecase.d
 import 'package:flutter_superenalotto_cleancode/2_application/pages/home/cubit/home_cubit.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
 
 final sl = GetIt.I; // sl == Service Locator
 
@@ -21,10 +22,12 @@ Future<void> init() async {
   sl.registerFactory<HomeSchedinaRepo>(
       () => HomeSchedinaRepoImpl(homeSchedinaDatasource: sl()));
 
+  //sl.registerFactory<HomeSchedinaDatasource>(
+  //    () => HomeSchedinaLocalSourceImpl());
+
   sl.registerFactory<HomeSchedinaDatasource>(
-      () => HomeSchedinaLocalSourceImpl());
+      () => HomeSchedinaRemoteSourceImpl(client: sl()));
 
 // ! externs
-// per ora non li uso
-//  sl.registerFactory(() => http.Client());
+  sl.registerFactory(() => http.Client());
 }

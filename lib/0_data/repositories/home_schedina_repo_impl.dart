@@ -19,14 +19,16 @@ class HomeSchedinaRepoImpl implements HomeSchedinaRepo {
 
   @override
   Future<Either<Failure, HomeSchedinaEntity>> getAdviceFromDatasource() async {
-    try {
-      final result = await homeSchedinaDatasource.getHomeSchedina();
-      return right(result);
+    //try {
+    final result = await homeSchedinaDatasource.getHomeSchedina();
+    return right(result);
+    /*
     } on ServerException catch (_) {
       return left(ServerFailure());
     } catch (e) {
       return left(GeneralFailure());
     }
+    */
   }
 }
 
