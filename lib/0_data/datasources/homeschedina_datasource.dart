@@ -72,8 +72,9 @@ class HomeSchedinaRemoteSourceImpl implements HomeSchedinaDatasource {
     var responseBody = json.decode(response.body);
 
     //(jsonDecode(response.body)["data"] as List).map((e) => e as Map<String, dynamic>)?.toList();
-
-    final diecieLottoModel = DiecieLottoModel.fromJson(responseBody);
+    final jsonMap = json.decode(responseBody);
+    List<String> temp = (jsonMap['estrazioni'] as List);
+    final diecieLottoModel = DiecieLottoModel.fromJson(temp);
 
     response = await client.get(
         Uri.parse('http://192.168.1.3:5238/SuperEnalotto?iNumColonne=2'),
