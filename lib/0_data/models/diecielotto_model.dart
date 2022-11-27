@@ -7,7 +7,12 @@ class DiecieLottoModel extends DieciELottoEntity with EquatableMixin {
           estrazioni: estrazioni,
         );
 
-  factory DiecieLottoModel.fromJson(Map<List<String>, dynamic> json) {
-    return DiecieLottoModel(estrazioni: json['estrazioni']);
-  }
+  factory DiecieLottoModel.fromJson(Map<String, dynamic> json) =>
+      DiecieLottoModel(
+        estrazioni: List<String>.from(json["estrazioni"].map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "estrazioni": List<dynamic>.from(estrazioni!.map((x) => x)),
+      };
 }

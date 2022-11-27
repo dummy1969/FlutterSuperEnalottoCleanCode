@@ -47,6 +47,7 @@ class HomeWidget extends StatelessWidget {
           SchedinaWidgetCore(
             estrazioni: estrazioniEuroJackpot,
             titolo: 'Estrazioni Euro Jackpot',
+            altroDato: 'EuroNumeri: $get10',
           ),
           const SizedBox(
             height: k_heightMargin,
@@ -54,7 +55,6 @@ class HomeWidget extends StatelessWidget {
           SchedinaWidgetCore(
             estrazioni: estrazioniDiecielotto,
             titolo: 'Estrazioni 10 e Lotto',
-            altroDato: 'EuroNumeri: $get10',
           ),
           /**/
         ]),

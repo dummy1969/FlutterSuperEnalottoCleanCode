@@ -5,8 +5,14 @@ class SuperEnalottoModel extends SuperEnalottoEntity with EquatableMixin {
   SuperEnalottoModel({required estrazioni, required getStar})
       : super(estrazioni: estrazioni, getStar: getStar);
 
-  factory SuperEnalottoModel.fromJson(Map<String, dynamic> json) {
-    return SuperEnalottoModel(
-        estrazioni: json['estrazioni'], getStar: json['getStar']);
-  }
+  factory SuperEnalottoModel.fromJson(Map<String, dynamic> json) =>
+      SuperEnalottoModel(
+        estrazioni: List<String>.from(json["estrazioni"].map((x) => x)),
+        getStar: json["getStar"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "estrazioni": List<dynamic>.from(estrazioni.map((x) => x)),
+        "getStar": getStar,
+      };
 }

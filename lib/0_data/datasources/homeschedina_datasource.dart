@@ -59,7 +59,6 @@ class HomeSchedinaLocalSourceImpl implements HomeSchedinaDatasource {
 class HomeSchedinaRemoteSourceImpl implements HomeSchedinaDatasource {
   /// Classe che finalmente implementa la generazione delle schedine
   /// in questo caso via API
-
   final http.Client client;
 
   HomeSchedinaRemoteSourceImpl({required this.client});
@@ -67,29 +66,26 @@ class HomeSchedinaRemoteSourceImpl implements HomeSchedinaDatasource {
   @override
   Future<HomeSchedinaEntity> getHomeSchedina() async {
     var response = await client.get(
-        Uri.parse('http://192.168.1.3:5238/DiecieLotto?iNumColonne=2'),
+        Uri.parse('http://vpn.database.it:5238/SuperEnalotto?iNumColonne=2'),
         headers: {'content-type': 'application/json'});
     var responseBody = json.decode(response.body);
-
-    //(jsonDecode(response.body)["data"] as List).map((e) => e as Map<String, dynamic>)?.toList();
-    final jsonMap = json.decode(responseBody);
-    List<String> temp = (jsonMap['estrazioni'] as List);
-    final diecieLottoModel = DiecieLottoModel.fromJson(temp);
-
-    response = await client.get(
-        Uri.parse('http://192.168.1.3:5238/SuperEnalotto?iNumColonne=2'),
-        headers: {'content-type': 'application/json'});
-    responseBody = json.decode(response.body);
     final superEnalottoModel = SuperEnalottoModel.fromJson(responseBody);
 
     response = await client.get(
-        Uri.parse('http://192.168.1.3:5238/EuroJackpot?iNumColonne=2'),
+        Uri.parse('http://vpn.database.it:5238/DiecieLotto?iNumColonne=2'),
+        headers: {'content-type': 'application/json'});
+    responseBody = json.decode(response.body);
+
+    final diecieLottoModel = DiecieLottoModel.fromJson(responseBody);
+
+    response = await client.get(
+        Uri.parse('http://vpn.database.it:5238/EuroJackpot?iNumColonne=2'),
         headers: {'content-type': 'application/json'});
     responseBody = json.decode(response.body);
     final euroJackpotModel = EuroJackpotModel.fromJson(responseBody);
 
     response = await client.get(
-        Uri.parse('http://192.168.1.3:5238/MilionDay?iNumColonne=2'),
+        Uri.parse('http://vpn.database.it:5238/MilionDay?iNumColonne=2'),
         headers: {'content-type': 'application/json'});
     responseBody = json.decode(response.body);
     final milionDayModel = MilionDayModel.fromJson(responseBody);

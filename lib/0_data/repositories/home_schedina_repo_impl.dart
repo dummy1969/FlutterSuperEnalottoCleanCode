@@ -1,5 +1,4 @@
 import 'package:flutter_superenalotto_cleancode/0_data/datasources/homeschedina_datasource.dart';
-import 'package:flutter_superenalotto_cleancode/0_data/exceptions/exception.dart';
 import 'package:flutter_superenalotto_cleancode/1_domain/failures/failures.dart';
 import 'package:flutter_superenalotto_cleancode/1_domain/entities/home_schedina_entity.dart';
 import 'package:dartz/dartz.dart';
